@@ -25,6 +25,7 @@ import typing
 
 __all__ = [
     'ConstMapping',
+    'ConstDict',
 ]
 
 KT = typing.TypeVar('KT')
@@ -52,7 +53,38 @@ class ConstMapping(Protocol[KT, VT]):
 
     def __reversed__(self) -> typing.Iterable[KT]: ...
 
+    # TODO: do we need a MutableMappingProtocol?
     def copy(self) -> typing.MutableMapping[KT, VT]: ...
+
+    def get(self, key: KT, default: typing.Optional[VT]) -> typing.Optional[VT]: ...
+
+    def items(self) -> typing.ItemsView[KT, VT]: ...
+    def keys(self) -> typing.KeysView[KT]: ...
+    def values(self) -> typing.ValuesView[VT]: ...
+
+
+class ConstDict(Protocol[KT, VT]):
+
+    """A Protocol for an immutable Mapping.
+
+    Provides no methods for mutating the mapping, although the fact is that is a
+    mapping and can be mutated, even if mypy says that's an error.
+
+    This is different than the Mapping in typing in that it's a Protocol, so
+    any object that implements this Protocol  will work correctly.
+    """
+
+    def __contains__(self, key: KT) -> bool: ...
+    def __eq__(self, other: object) -> bool: ...
+    def __ne__(self, other: object) -> bool: ...
+
+    def __iter__(self) -> typing.Iterator[KT]: ...
+
+    def __len__(self) -> int: ...
+
+    def __reversed__(self) -> typing.Iterable[KT]: ...
+
+    def copy(self) -> typing.Dict[KT, VT]: ...
 
     def get(self, key: KT, default: typing.Optional[VT]) -> typing.Optional[VT]: ...
 

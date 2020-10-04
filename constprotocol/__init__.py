@@ -18,6 +18,6 @@ methods.
 
 from ._list import ConstList
 from ._set import ConstSet
-from ._mapping import ConstMapping
+from ._mapping import ConstDict, ConstMapping
 
 __version__ = '0.0.1'

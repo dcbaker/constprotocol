@@ -57,6 +57,12 @@ Of course, the underlying python values have not actually become immutable,
 but like C and C++ it's more of a promise that if you take a ConstList or
 return one that you're not going to modify it.
 
+One of the goals of const protocol is to have 0 runtime performance impact. You
+could create an immutable proxy, that wraps a value and only exposes it's const
+methods, and all of it's attributes as read only (using properties and more
+proxies). But that has runtime overhead and adds code complexity. This approach
+adds zero run time overhead and very little complexity to the code.
+
 ## What if I want to mutate the value after all?
 
 You don't.
